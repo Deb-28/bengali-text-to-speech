@@ -14,13 +14,19 @@ app.get('/',(req,res)=>{
     res.render('index')
 })
 app.post('/',(req,res)=>{
-    const childPython = spawn('python',['codespace.py',req.body.element])
-    childPython.stdout.on('data',(data)=>{
-        console.log(`Stdout: ${data}`)
-    })
-    childPython.stderr.on('data',(data)=>{
-        console.error(`stderr:${data}`)
-    })
+    if(req.body.element!='')
+    {
+        const childPython = spawn('python',['codespace.py',req.body.element])
+        childPython.stdout.on('data',(data)=>{
+            console.log(`Stdout: ${data}`)
+        })
+        childPython.stderr.on('data',(data)=>{
+            console.error(`stderr:${data}`)
+        })
+    }
+    else{
+        console.log('no text')
+    }
 })
 
 app.listen(3000,()=>{console.log('listening to 3000')})
