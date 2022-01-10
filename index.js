@@ -13,7 +13,7 @@ app.use(express.static('./public'))
 app.get('/',(req,res)=>{
     res.render('index')
 })
-app.post('/',(req,res)=>{
+app.post('/',(req,res,next)=>{
     if(req.body.element!='')
     {
         const childPython = spawn('python',['codespace.py',req.body.element])
@@ -26,6 +26,7 @@ app.post('/',(req,res)=>{
     }
     else{
         console.log('no text')
+        next()
     }
 })
 
